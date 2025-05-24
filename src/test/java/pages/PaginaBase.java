@@ -3,18 +3,15 @@ package pages;
 import java.time.Duration;
 
 
-import org.openqa.selenium.Alert;
+
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 
@@ -72,6 +69,10 @@ import io.github.bonigarcia.wdm.WebDriverManager;
     public void clickElemento(Elemento elemento) {
         Find(elemento).click();
     }
+
+    //Este método usa el método Find para localizar el elemento y luego verifica su visibilidad.
+    //Si el elemento no se encuentra o ocurre cualquier error (por ejemplo, NoSuchElementException),
+    // se captura la excepción y se retorna false para indicar que no está visible.
     public boolean estaVisible(Elemento elemento) {
         try {
             return Find(elemento).isDisplayed();
@@ -80,14 +81,10 @@ import io.github.bonigarcia.wdm.WebDriverManager;
         }
     }
 
-    public boolean validarEmailPersonalizado(String email) {
-        if (email == null) return false;
-        if (email.length() <= 4) return false;
-        String regex = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$";
-        return email.matches(regex);
-    }
     
 }
+    
+
     
 
     

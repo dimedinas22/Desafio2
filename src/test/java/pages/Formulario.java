@@ -1,16 +1,20 @@
 package pages;
 
+
 import org.openqa.selenium.Alert;
-import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 
 import java.time.Duration;
 
 
 
-
+/**
+ * Clase que representa la página del formulario web.
+ * Hereda de PaginaBase, donde están definidos métodos reutilizables para interactuar con el navegador.
+ */
 public class Formulario extends PaginaBase {
 
     // ingresar nombre en campo nombre
@@ -26,9 +30,13 @@ public class Formulario extends PaginaBase {
     // Boton para enviar formulario
     private Elemento botonEnviar = new Elemento ("xpath","//button[@type='submit']");
     // Mensaje que aparece si el email es inválido
-    private Elemento mensajeErrorEmail = new Elemento ("xpath","//p[@class='formulario__input-error formulario__input-error-activo']");
-    
-    //Constructor
+    private Elemento mensajeErrorEmail = new Elemento ("xpath","//b[normalize-space()='no debe incluir caracteres especiales']");
+    // Mensaje que aparece si el nonbre es inválido
+    private Elemento mensajeErrorNombre = new Elemento ("xpath","//p[contains(text(),'El nombre debe ser mayor a 4 letras y no debe incl')]");
+    //Indica si apareció una alerta al enviar el formulario
+    private boolean alertaVisible = false;
+
+    // Constructor que llama al constructor de la clase base
     public Formulario() {
         super(driver);
     }
@@ -47,17 +55,6 @@ public class Formulario extends PaginaBase {
     // Escribe dato email
     public void ingresarEmail(String datosemail){
         escribir(email,datosemail); 
-
-    boolean errorVisible = estaVisible(mensajeErrorEmail);
-    boolean esValidoLocal = validarEmailPersonalizado(datosemail);
-
-    if (esValidoLocal && errorVisible) {
-        throw new RuntimeException("❌ El email '" + datosemail + "' es válido, pero el DOM muestra un error.");
-    } else if (!esValidoLocal && !errorVisible) {
-        throw new RuntimeException("❌ El email '" + datosemail + "' es inválido, pero el DOM NO muestra error.");
-    } else {
-        System.out.println("✅ El email '" + datosemail + "' fue procesado correctamente por el DOM.");
-    }
     }
     
     // Escribe dato barrio
@@ -73,25 +70,58 @@ public class Formulario extends PaginaBase {
         escribir(mensaje,datosmensaje);   
 
     }
-     // Hace clic en el boton Enviar
+     // Hace clic en el boton Enviar y maneja la alerta que aparece.
     public boolean clickEnviar(){
         try {
-        clickElemento(botonEnviar);
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
-        Alert alerta = wait.until(ExpectedConditions.alertIsPresent());
-
-        // Si llega aquí, es porque hay una alerta
-        System.out.println("Se detectó una alerta: " + alerta.getText());
-        alerta.accept(); // o .dismiss() si lo prefieres
-        return true;
-
-    } catch (TimeoutException e) {
-        // No se mostró alerta: formulario enviado correctamente
-        throw new AssertionError("Error: No se mostró la alerta al intentar enviar el formulario vacío.");
+            clickElemento(botonEnviar);
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+            Alert alerta = wait.until(ExpectedConditions.alertIsPresent());
+            alertaVisible = true;  // guardamos estado de alerta detectada
+            alerta.accept();       // cerramos alerta
+            return true;
+        } catch (TimeoutException e) {
+            alertaVisible = false;
+            return false;
+        }
     }
-}
+    // Métodos para verificar si los mensajes de error son visibles
+    public boolean estaVisibleMensajeErrorNombre() {
+        return estaVisible(mensajeErrorNombre);
+    }
+    //public boolean estaVisibleMensajeErrorAsunto() {
+    //    return estaVisible(mensajeErrorNombre);
+    //}
+    //public boolean estaVisibleMensajeErrorBarrio() {
+    //    return estaVisible(mensajeErrorNombre);
+    //}
+    
+    /**
+     * Valida si el email ingresado tiene un formato correcto usando expresión regular.
+     * El email a validar
+     * true si el email es válido, false en caso contrario
+     */
+    public boolean validarEmailPersonalizado(String email) {
+        if (email == null) return false;
+        if (email.length() <= 4) return false;
+        String regex = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$";
+        return email.matches(regex);
+    }
+    
+    //Verifica si el mensaje de error del email es visible.
+    public boolean errorVisibleEmail() {
+    return estaVisible(mensajeErrorEmail);
+    }
+    //Devuelve si una alerta fue mostrada después de enviar el formulario.
+    public boolean hayAlertaPresente() {
+        return alertaVisible;
+    }
 
 }
+
+
+
+    
+
 
     
 

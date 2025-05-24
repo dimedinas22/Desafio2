@@ -2,19 +2,16 @@ package steps;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
+import org.junit.jupiter.api.Assertions;
 import io.cucumber.java.en.*;
 import pages.Formulario;
+
 
 
 public class pasosFormulario {
     
     private Formulario caso = new Formulario();
+    private String datosemail;
 
     @Given("El usuario navega a {string}")
     public void navegaraFormularioWeb(String url){
@@ -25,10 +22,24 @@ public class pasosFormulario {
     public void elUsuarioIngresaSuNombre(String datosnombre) {
         caso.ingresarNombre(datosnombre);
     }
-    @And("Ingresa su email {string}")
+    @When("Ingresa su email {string}")
     public void elUsuarioIngresaSuEmail(String datosemail) {
-        caso.ingresarEmail(datosemail);  
+        this.datosemail = datosemail;  // guardar para luego
+        caso.ingresarEmail(datosemail);
     }
+    @Then("No deberia aparecer mensaje de error en el campo mail")
+    public void noDeberiaAparecerErrorEmail(){
+        caso.ingresarEmail(datosemail);  
+        boolean visible = caso.errorVisibleEmail();
+        boolean esValido = caso.validarEmailPersonalizado(datosemail);
+
+    if (!esValido) {
+        assertTrue(visible, "❌ El email es inválido pero no se mostró el error en el DOM.");
+    } else {
+        assertFalse("❌ El email es válido pero se mostró un error en el DOM.", visible);
+    }  
+    }
+
     @And("Ingresa su barrio {string}")
     public void elUsuarioIngresaSuBarrio(String datosebarrio) {
         caso.ingresarBarrio(datosebarrio);  
@@ -41,15 +52,28 @@ public class pasosFormulario {
     public void elUsuarioIngresaUnMensaje(String datosmensaje) {
         caso.ingresarMensaje(datosmensaje);  
     }
-    @When("El usuario da clic en boton Enviar, el formulario se envia exitosamente")
-    public void elUsuarioEnviaFormulario() {
-        caso.clickEnviar();  
-    }
-    @When("Al cliclear en boton enviar se muestra alerta de error")
+    @When("El usuario hace clic en el botón enviar sin completar el formulario")
     public void elUsuarioClickEnviarSinInformacion() {
-        caso.clickEnviar();  
+        caso.clickEnviar(); 
+    }
+    @Then("Deberia aparecer una alerta de error al enviar el formulario vacio")
+    public void seMuestraUnaAlertaDeError() {
+        boolean alertaMostrada = caso.hayAlertaPresente();
+        Assertions.assertTrue(alertaMostrada, "❌ No se mostró la alerta al enviar el formulario vacío.");
+    }
+    
+
+    @When("Ingresa nombre invalido {string}")
+    public void ingresaNombreinvalido(String nombre) {
+        caso.ingresarNombre(nombre);
+    }
+    @Then("Se muestra un mensaje de error indicando que el nombre es inválido")
+    public void seMuestraUnMensajeDeErrorNombreInvalido() {
+    Assertions.assertTrue(caso.estaVisibleMensajeErrorNombre(),"❌ El nombre es inválido, pero NO apareció mensaje de error."
+    );
+    }
 }
-}
+
 
 
 

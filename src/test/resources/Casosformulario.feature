@@ -1,28 +1,43 @@
 Feature: Automatizacion sobre formulario Web
     
 
-    Scenario Outline: El usuario ingresa al formulario, escribe sus datos validos, da clic boton Enviar el formulario se envia exitosamente
+    Scenario Outline: Validacion de ingreso email valido
         Given El usuario navega a "http://64.227.54.255/Softesting/Frontend/Caso1.html"
-        When Ingresa su nombre "<Nombre>"
-        And Ingresa su email "<Email>"
-        And Ingresa su barrio "<Barrio>"
-        And Ingresa un asunto "<Asunto>"
-        And Ingresa un mensaje "<Mensaje>"
-        When El usuario da clic en boton Enviar, el formulario se envia exitosamente
+        When Ingresa su email "<Email>"
+        Then No deberia aparecer mensaje de error en el campo mail
         
 
         Examples:
-            | Nombre    | Email               | Barrio    | Asunto        | Mensaje       |
-            | Diana     |dimedina44@gmail.com | La trini  |prueba1        |prueba 1       |
+            | Email               | 
+            |dimedina44@gmail.com | 
+            |dimedina44gmail.com  | 
+            |d$r@gmail.com        |
     
-    
-    Scenario: El usuario intenta enviar el formulario sin ingresar informacion
+    Scenario: El usuario intenta enviar el formulario sin ingresar informacion, se valida mensaje de error
         Given El usuario navega a "http://64.227.54.255/Softesting/Frontend/Caso1.html"
-        When Al cliclear en boton enviar se muestra alerta de error
+        When El usuario hace clic en el botón enviar sin completar el formulario
+        Then Deberia aparecer una alerta de error al enviar el formulario vacio
         
+    Scenario Outline: El usuario ingresa nombre inválido con menos de 4 letras o nombre con caracter especial
+        Given El usuario navega a "http://64.227.54.255/Softesting/Frontend/Caso1.html"
+        When Ingresa nombre invalido "<Nombre>"
+        Then Se muestra un mensaje de error indicando que el nombre es inválido
 
+        Examples:
+            | Nombre |
+            | DI     | 
+            | Di$na    |  
         
-    
+    #Scenario Outline: El usuario ingresa datos validos y vacios a los campos barrio y asunto validadando mensajes de error
+    #    Given El usuario navega a "http://64.227.54.255/Softesting/Frontend/Caso1.html"
+    #    And Ingresa su barrio "<Barrio>"
+    #    And Ingresa un asunto "<Asunto>"
+    #    Then Se muestra un mensaje de error indicando que el nombre es inválido
+
+    #    Examples:
+    #        | Barrio           | Asunto |
+    #        |  Cruz de Bonza   |        |
+    #        |                  |        |
     
         
         
