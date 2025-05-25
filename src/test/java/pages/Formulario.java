@@ -25,7 +25,7 @@ public class Formulario extends PaginaBase {
     private Elemento barrio = new Elemento ("name","barrio"); 
     // ingresar asunto en campo asunto
     private Elemento asunto = new Elemento ("css","input[name='asunto']"); 
-    // ingresar mensaje en campo mensaje
+     // ingresar mensaje en campo mensaje
     private Elemento mensaje = new Elemento ("xpath","//textarea[@name='Mensaje']"); 
     // Boton para enviar formulario
     private Elemento botonEnviar = new Elemento ("xpath","//button[@type='submit']");
@@ -33,11 +33,14 @@ public class Formulario extends PaginaBase {
     private Elemento mensajeErrorEmail = new Elemento ("xpath","//b[normalize-space()='no debe incluir caracteres especiales']");
     // Mensaje que aparece si el nonbre es inválido
     private Elemento mensajeErrorNombre = new Elemento ("xpath","//p[contains(text(),'El nombre debe ser mayor a 4 letras y no debe incl')]");
-    private Elemento mensajeErrorbarrio = new Elemento ("css","div[id='grupo__barrio'] p[class='formulario__input-error formulario__input-error-activo']");
-    private Elemento mensajeErrorasunto = new Elemento ("css","div[id='grupo__asunto'] p[class='formulario__input-error formulario__input-error-activo']");
+    // Mensaje que aparece si el barrio es inválido
+    private Elemento mensajeErrorBarrio = new Elemento ("css","div[id='grupo__barrio'] p[class='formulario__input-error formulario__input-error-activo']");
+    // Mensaje que aparece si el asunto es inválido
+    private Elemento mensajeErrorAsunto = new Elemento ("css","div[id='grupo__asunto'] p[class='formulario__input-error formulario__input-error-activo']");
+    // Titulo de el campo Barrio en el formulario
     private Elemento tituloBarrio = new Elemento ("xpath","//label[contains(text(),'Varrio')]");
+    // Titulo de el campo Asunto en el formulario
     private Elemento tituloMensaje = new Elemento ("xpath","//label[contains(text(),'Mensage:')]");
-    
     //Indica si apareció una alerta al enviar el formulario
     private boolean alertaVisible = false;
 
@@ -72,8 +75,7 @@ public class Formulario extends PaginaBase {
     }
     // Escribe dato mensaje
     public void ingresarMensaje(String datosmensaje){
-        escribir(mensaje,datosmensaje);   
-
+        escribir(mensaje,datosmensaje);  
     }
      // Hace clic en el boton Enviar y maneja la alerta que aparece.
     public boolean clickEnviar(){
@@ -89,18 +91,19 @@ public class Formulario extends PaginaBase {
             return false;
         }
     }
-    // Métodos para verificar si los mensajes de error son visibles
+    //Verifica si el mensaje de error del nombre es visible.
     public boolean estaVisibleMensajeErrorNombre() {
         return estaVisible(mensajeErrorNombre);
     }
+    //Verifica si el mensaje de error del asunto es visible.
     public boolean estaVisibleMensajeErrorAsunto() {
-        return estaVisible(mensajeErrorasunto);
+        return estaVisible(mensajeErrorAsunto);
     }
+    //Verifica si el mensaje de error del barrio es visible.
     public boolean estaVisibleMensajeErrorBarrio() {
-        return estaVisible(mensajeErrorbarrio);
+        return estaVisible(mensajeErrorBarrio);
     }
 
-    
     //Verifica si el mensaje de error del email es visible.
     public boolean errorVisibleEmail() {
     return estaVisible(mensajeErrorEmail);
@@ -109,9 +112,11 @@ public class Formulario extends PaginaBase {
     public boolean hayAlertaPresente() {
         return alertaVisible;
     }
+    //Obtiene el texto visible del titulo barrio en el formulario
     public String verificarTituloBarrio(){
         return obtenerTexto(tituloBarrio);   
     }
+    //Obtiene el texto visible del titulo mensaje en el formulario
     public String verificarTituloMensaje(){
         return obtenerTexto(tituloMensaje);   
     }

@@ -69,6 +69,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
     public void clickElemento(Elemento elemento) {
         Find(elemento).click();
     }
+    // Metodo para obtener texto de un elemento
     public String obtenerTexto(Elemento elemento) {
     return Find(elemento).getText();
     }
