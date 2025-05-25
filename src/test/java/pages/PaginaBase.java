@@ -69,6 +69,9 @@ import io.github.bonigarcia.wdm.WebDriverManager;
     public void clickElemento(Elemento elemento) {
         Find(elemento).click();
     }
+    public String obtenerTexto(Elemento elemento) {
+    return Find(elemento).getText();
+    }
 
     //Este método usa el método Find para localizar el elemento y luego verifica su visibilidad.
     //Si el elemento no se encuentra o ocurre cualquier error (por ejemplo, NoSuchElementException),

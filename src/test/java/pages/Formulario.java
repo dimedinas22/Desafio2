@@ -33,6 +33,11 @@ public class Formulario extends PaginaBase {
     private Elemento mensajeErrorEmail = new Elemento ("xpath","//b[normalize-space()='no debe incluir caracteres especiales']");
     // Mensaje que aparece si el nonbre es inválido
     private Elemento mensajeErrorNombre = new Elemento ("xpath","//p[contains(text(),'El nombre debe ser mayor a 4 letras y no debe incl')]");
+    private Elemento mensajeErrorbarrio = new Elemento ("css","div[id='grupo__barrio'] p[class='formulario__input-error formulario__input-error-activo']");
+    private Elemento mensajeErrorasunto = new Elemento ("css","div[id='grupo__asunto'] p[class='formulario__input-error formulario__input-error-activo']");
+    private Elemento tituloBarrio = new Elemento ("xpath","//label[contains(text(),'Varrio')]");
+    private Elemento tituloMensaje = new Elemento ("xpath","//label[contains(text(),'Mensage:')]");
+    
     //Indica si apareció una alerta al enviar el formulario
     private boolean alertaVisible = false;
 
@@ -88,24 +93,13 @@ public class Formulario extends PaginaBase {
     public boolean estaVisibleMensajeErrorNombre() {
         return estaVisible(mensajeErrorNombre);
     }
-    //public boolean estaVisibleMensajeErrorAsunto() {
-    //    return estaVisible(mensajeErrorNombre);
-    //}
-    //public boolean estaVisibleMensajeErrorBarrio() {
-    //    return estaVisible(mensajeErrorNombre);
-    //}
-    
-    /**
-     * Valida si el email ingresado tiene un formato correcto usando expresión regular.
-     * El email a validar
-     * true si el email es válido, false en caso contrario
-     */
-    public boolean validarEmailPersonalizado(String email) {
-        if (email == null) return false;
-        if (email.length() <= 4) return false;
-        String regex = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$";
-        return email.matches(regex);
+    public boolean estaVisibleMensajeErrorAsunto() {
+        return estaVisible(mensajeErrorasunto);
     }
+    public boolean estaVisibleMensajeErrorBarrio() {
+        return estaVisible(mensajeErrorbarrio);
+    }
+
     
     //Verifica si el mensaje de error del email es visible.
     public boolean errorVisibleEmail() {
@@ -115,8 +109,16 @@ public class Formulario extends PaginaBase {
     public boolean hayAlertaPresente() {
         return alertaVisible;
     }
+    public String verificarTituloBarrio(){
+        return obtenerTexto(tituloBarrio);   
+    }
+    public String verificarTituloMensaje(){
+        return obtenerTexto(tituloMensaje);   
+    }
 
 }
+
+
 
 
 

@@ -1,15 +1,15 @@
 Feature: Automatizacion sobre formulario Web
     
 
-    Scenario Outline: Validacion de ingreso email valido
+    Scenario Outline: Validacion de ingreso email invalido
         Given El usuario navega a "http://64.227.54.255/Softesting/Frontend/Caso1.html"
         When Ingresa su email "<Email>"
-        Then No deberia aparecer mensaje de error en el campo mail
+        Then Deberia aparecer mensaje de error en el campo mail
         
 
         Examples:
             | Email               | 
-            |dimedina44@gmail.com | 
+            |dimedina44.gmail.com | 
             |dimedina44gmail.com  | 
             |d$r@gmail.com        |
     
@@ -28,17 +28,23 @@ Feature: Automatizacion sobre formulario Web
             | DI     | 
             | Di$na    |  
         
-    #Scenario Outline: El usuario ingresa datos validos y vacios a los campos barrio y asunto validadando mensajes de error
-    #    Given El usuario navega a "http://64.227.54.255/Softesting/Frontend/Caso1.html"
-    #    And Ingresa su barrio "<Barrio>"
-    #    And Ingresa un asunto "<Asunto>"
-    #    Then Se muestra un mensaje de error indicando que el nombre es inválido
+    Scenario Outline: El usuario ingresa datos invalidos menores a 4 letras en el campo barrio y asunto
+        Given El usuario navega a "http://64.227.54.255/Softesting/Frontend/Caso1.html"
+        And Ingresa su barrio "<Barrio>"
+        And Ingresa un asunto "<Asunto>"
+        Then Se debe mostrar un mensaje de error en los campos barrio y asunto
 
-    #    Examples:
-    #        | Barrio           | Asunto |
-    #        |  Cruz de Bonza   |        |
-    #        |                  |        |
+        Examples:
+            | Barrio            | Asunto |
+            |  Lat              |  Ok!   |      
+            |  Cl#              |  Ok   |      
     
         
+    Scenario: Verificar ortografia de titulos Barrio y Mensaje
+        Given El usuario navega a "http://64.227.54.255/Softesting/Frontend/Caso1.html"
+        And Visualiza el titulo Barrio
+        And Visualiza el titulo Mensaje
+        Then Los titulos de Barrio y Mensaje estan bien escritos
+
         
     
