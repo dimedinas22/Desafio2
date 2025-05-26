@@ -1,4 +1,4 @@
-## Desafío 1: Replica Escenario De Prueba Con Selenium Y Cucumber
+## Desafío 2: Automatización de Pruebas - Formulario Web
 
 ### 🧪 Descripción del Proyecto
 Este proyecto automatiza la validación de un formulario web ubicado en http:/Softesting/Frontend/Caso1.html, utilizando Selenium WebDriver, Cucumber y Gradle. El objetivo es verificar el comportamiento del formulario, asegurando que los campos obligatorios, los formatos y las respuestas del sistema funcionen correctamente. Las pruebas están escritas en lenguaje Gherkin bajo el enfoque BDD y ejecutadas con Cucumber.
