@@ -1,68 +1,204 @@
-# Desafío 1: Replica Escenario De Prueba Con Selenium Y Cucumber
+## Desafío 1: Replica Escenario De Prueba Con Selenium Y Cucumber
 
-## Sobre este Proyecto:
-En este proyecto se automatizo el flujo E2E a la pgina de Amazon, en la cual se busca un producto que esta en un lugar especifico y se trata de agregar al carrito de compras. 
+### 🧪 Descripción del Proyecto
+Este proyecto automatiza la validación de un formulario web ubicado en http:/Softesting/Frontend/Caso1.html, utilizando Selenium WebDriver, Cucumber y Gradle. El objetivo es verificar el comportamiento del formulario, asegurando que los campos obligatorios, los formatos y las respuestas del sistema funcionen correctamente. Las pruebas están escritas en lenguaje Gherkin bajo el enfoque BDD y ejecutadas con Cucumber.
 
-Este proyecto esta hecho con Selenium Webdriver Y Cucumber, se siguen las buenas practicas aprendidas en los tutoriales del curso. 
+A continuación, se describen los escenarios de prueba automatizados:
 
-### ¿Qué es Selenium WebDriver?
-[Selenium WebDriver](https://www.selenium.dev/documentation/webdriver/) es una colección de APIs que se utilizan para automatizar la interacción con navegadores web. Proporciona una forma de controlar el navegador desde el código, permitiendo simular las acciones de un usuario real, como hacer clic en botones, ingresar texto, navegar entre páginas y más. Es una herramienta fundamental para las pruebas automatizadas de aplicaciones web, asegurando su correcto funcionamiento y la validación de funcionalidades a través de diferentes navegadores.
+### @Formulario1
+**Escenario:** El usuario ingresa datos válidos y envía el formulario exitosamente.  
+**Precondiciones:**
+- El usuario accede al formulario desde un navegador compatible.
+- El formulario está completamente cargado.
 
-### ¿Qué es Cucumber?
-[Cucumber](https://cucumber.io/docs) es una herramienta de Behavior-Driven Development (BDD) que permite escribir pruebas en un lenguaje sencillo y legible por personas no técnicas, llamado Gherkin. Las pruebas se describen en términos de "características" y "escenarios", utilizando un formato estructurado de "Dado" (Given), "Cuando" (When) y "Entonces" (Then). Cucumber facilita la colaboración entre desarrolladores, testers y stakeholders, ya que las pruebas se convierten en una especificación viva del comportamiento esperado de la aplicación. Luego, estas descripciones se vinculan a código de automatización para su ejecución.
+**Datos de ejemplo:**  
+- Nombre: Diana Medina  
+- Email: dimedina44@gmail.com  
+- Barrio: La trini  
+- Asunto: prueba1  
+- Mensaje: Prueba1  
 
-### ¿Qué es Gradle?
-[Gradle](https://gradle.org/) es una potente herramienta de automatización de construcciones que gestiona las dependencias del proyecto y facilita la compilación, ejecución y empaquetamiento de la aplicación.
+**Resultado esperado:** Se muestra una alerta o mensaje de éxito indicando que el formulario fue enviado correctamente.
 
-### ¿Qué es una dependencia?
-Una dependencia o librería es un programa desarrollado por terceros, que nuestro proyecto utiliza para llevar a cabo ciertas funcionalidades. En lugar de escribir todo el código necesario desde cero, incorporamos estas herramientas externas para simplificar el desarrollo y aprovechar soluciones ya probadas y optimizadas. Muchas de estas dependencias las descargamos desde [MVN Repository](https://mvnrepository.com/).
+---
 
-## Configuración del Proyecto
+### @Formulario2
+**Escenario:** Validación de ingreso de emails inválidos.  
+**Precondiciones:**
+- El campo de email se encuentra visible y habilitado.
+- El usuario accede correctamente al formulario.
 
-### Requisitos Previos
-Para ejecutar este proyecto se debe tener unas instalaciones previas que son:
-- Java Development Kit (JDK) 17
-- Gradle
+**Emails inválidos probados:**  
+- dimedina44.gmail.com  
+- dimedina44gmail.com  
+- d$r@gmail.com  
 
-### Instalación de Java Development Kit (JDK) 17
-Para instalar el JDK buscamos en el navegador JDK Download, entramos en [Oracle](https://www.oracle.com/co/java/technologies/downloads/),  buscamos un JDK que sea Long-Term Support (LTS), ya que estos tienen un soporte más amplio y son más estables. puede ser el JDK 17 o JDK 21. En este caso utilizamos el JDK 17 que tiene un soporte hasta el año 2029. Luego descarga el instalador del JDK adecuado para tu versión de Windows (32 o 64 bits). Por último, solo debes ejecutarlo y seguir las indicaciones.
+**Resultado esperado:** El campo muestra un mensaje de error por formato inválido de email.
 
-Para saber si tenemos instalado Java solo utilizamos el comando java --version en el CMD de nuestro computador.
+---
 
-### Instalación de Gradle
-Para instalar Gradle buscamos en el navegador Gradle Download, esto nos lleva a la página de [Gradle](https://gradle.org/install/) y descargamos el instalador. Al descargarlo lo ejecutamos y seguimos las indicaciones.
+### @Formulario3
+**Escenario:** El usuario intenta enviar el formulario sin completar ningún campo.  
+**Precondiciones:**
+- Todos los campos del formulario están vacíos.
+- El botón "Enviar" está habilitado.
 
-Para saber si tenemos instalado Gradle solo utilizamos el comando gradle --version en el CMD de nuestro computador. 
+**Resultado esperado:** Se genera una alerta o mensaje de error indicando que no se puede enviar el formulario.
+
+---
+
+### @Formulario4
+**Escenario:** 
+Se valida nombre invalido contiene menos de 4 letras o caracteres especiales.  
+**Precondiciones:**
+- El campo "Nombre" está visible y permite la escritura.
+
+**Valores inválidos:**  
+- DI  
+- Di$na  
+
+**Resultado esperado:** Se muestra un mensaje de error indicando que el nombre ingresado no es válido.
+
+---
+
+### @Formulario5
+**Escenario:** Los campos "Barrio" y "Asunto" contienen datos inválidos.  
+**Precondiciones:**
+- El usuario ha dejado los demás campos vacíos o con datos válidos.
+- Los campos "Barrio" y "Asunto" aceptan entrada de texto.
+
+**Datos de ejemplo inválidos:**  
+- Barrio: Lat, Asunto: Ok!  
+- Barrio: Cl#, Asunto: Ok  
+
+**Resultado esperado:** Se muestran mensajes de error específicos para cada campo inválido.
+
+---
+
+### @Formulario6
+**Escenario:** Verificación ortográfica de los títulos "Barrio" y "Mensaje".  
+**Precondiciones:**
+- El formulario está completamente cargado.
+- Los títulos o labels son visibles en pantalla.
+
+**Resultado esperado:** Los títulos están escritos correctamente como "Barrio" y "Mensaje", sin errores ortográficos.
+
+
+
+## 🧰 Herramientas y Versiones Usadas
+
+### ☕ Java Development Kit (JDK) : Version 21 
+
+Este proyecto está desarrollado utilizando Java Development Kit (JDK) versión 21, por lo que es necesario tener esta versión instalada para compilar y ejecutar el código correctamente.
+
+### 🔧 ¿Qué es el JDK?
+El JDK (Java Development Kit) es un conjunto de herramientas proporcionado por Oracle (u otros distribuidores) que permite desarrollar, compilar y ejecutar aplicaciones Java. Incluye el JRE (Java Runtime Environment), el compilador javac, y herramientas como javadoc, jar, etc.
+
+ 🛠️ Instalación del JDK 21
+
+Opción 1: Descargar desde el sitio oficial de Oracle
+Visita: https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html
+Descarga el instalador correspondiente a tu sistema operativo (Windows, macOS, Linux).
+Sigue los pasos de instalación.
+
+✅ Verificar instalación
+Después de instalar, abre una terminal y ejecuta: java -version
+
+## 📦 Manejador de Dependencias
+
+Este proyecto utiliza Gradle Version 8.12 para la gestión de dependencias y la automatización de tareas.
+
+
+🔧 Instalación de Gradle
+Ve al sitio oficial de descargas de Gradle: https://gradle.org/releases/
+Descarga la versión binaria más reciente (o compatible con tu proyecto).
+Descomprime el archivo ZIP en una ubicación de tu preferencia.
+Agrega la ruta del directorio bin de Gradle a la variable de entorno PATH.
+
+✅ Verificar instalación
+Después de la instalación, abre una terminal o CMD y ejecuta: gradle --version
 
 ### Extensiones de VS code
-Para este proyecto se utilizaron alguna extensiones de VS Code que ayudan a . Las extensiones que vamos a descargar son:
-- Extension Pack for Java
-- Gradle for Java
-- Gradle Language Support
-- Cucumber
-- Snippets and Syntax Highlight for Gherkin (Cucumber)
+Para este proyecto se utilizaron alguna extensiones de VS Code que ayudan a la escritura, organización y ejecución de pruebas automatizadas, especialmente para trabajar con Java, Gradle y Cucumber. Las extensiones que vamos a descargar son:
 
-### Instalación de Dependencias
-Para este proyecto Java con Gradle implementamos algunas dependencias en el archivo buil.gradle que se bajaron de [MVN Repository](https://mvnrepository.com/).
-- **Selenium Java**: Se utiliza la versión 4.21.0.
-- **TestNG**: Se utiliza la versión 7.11.0.
-- **Cucumber JVM: Java**: Se utiliza la versión 7.22.0. Esta versión de be ser la misma que la del Cucumber JVM: JUnit 4.
-- **Cucumber JVM: JUnit 4**: Se utiliza la version 7.22.0. Esta versión de be ser la misma que la del Cucumber JVM:Java.
-- **WebDriverManager** (Debe ser la de bonigarcia): Se utiliza la versión 5.7.0.
+Extension Pack for Java  
+Gradle for Java  
+Gradle Language Support  
+Cucumber  
+Snippets and Syntax Highlight for Gherkin (Cucumber)  
 
-## A tener en cuenta
-Al realizar la automatizacion de esta pagina, al principio siempre sale un captchat. Para resolver el problema del captcha se implemento un codigo que hace que el programa espere 15 segundos para resolverlo manualmente. Si el Captcha no se resuelve en esos 15 segundos la prueba falla. 
+###  Dependencias
 
-```java
-public void espera() {
-        try {
-            Thread.sleep(15000); //pausa de 15 segundos
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-```
+Para este proyecto desarrollado en Java con Gradle, se agregaron varias dependencias en el archivo build.gradle, las cuales fueron obtenidas desde el repositorio https://mvnrepository.com/repos/central
+ 
+Selenium Java: Version 4.32.0   
+Cucumber JVM (Java): Version 7.22.0
+Cucumber JVM (JUnit 4): Version	7.22.0          
+TestNG: Version	7.10.2  
+WebDriverManager (Bonigarcia): Version 6.0.1
 
-## Estructura del Proyecto
+### 🌐 Navegador Utilizado para las Pruebas Automatizadas
+Este proyecto utiliza Google Chrome como navegador principal para la ejecución de pruebas automatizadas con Selenium WebDriver.
 
-## Ejecución de Pruebas
+✅ Requisitos para usar Google Chrome
+Tener Google Chrome instalado en el sistema (se recomienda la última versión estable).
+Asegurarse de que la versión del navegador sea compatible con el ChromeDriver utilizado por WebDriverManager.
+
+
+### ⚙️ Instalación
+
+1.Clona el repositorio:
+git clone https://github.com/dimedinas22/CarritoComprasAmazon.git
+cd CarritoComprasAmazon  
+2.Asegúrate de tener el WebDriver correspondiente a tu navegador en el sistema y que su ruta esté configurada en las variables de entorno.
+
+
+
+### 🚀 Ejecución de Pruebas
+
+Para ejecutar las pruebas automatizadas, utiliza el siguiente comando en la terminal: gradle test
+
+### 📊 Visualización de reportes
+
+Los resultados se suben automáticamente a Cucumber Reports, permitiendo revisar los escenarios desde cualquier dispositivo con acceso web.
+Para generar y publicar reportes en Cucumber, se utiliza una variable de entorno llamada CUCUMBER_PUBLISH_TOKEN. Este token es proporcionado por la plataforma de Cucumber Reports, y permite que los resultados de tus pruebas se suban y se visualicen en línea.
+
+#### Pasos para generar el reporte:
+
+1. Primero, debes registrarte o iniciar sesión en https://reports.cucumber.io/ para obtener tu token personal.
+2. Una vez que tengas el token, debes configurarlo como una variable de entorno en tu sistema. Esto se puede hacer ejecutando el siguiente comando en la terminal : export CUCUMBER_PUBLISH_TOKEN=some-secret-token (reemplazar el some-secret-token por el token que les dio Cucumber)
+
+
+### 📁 Estructura del Proyecto
+```text
+Desafio2Formulario/
+│
+├── build/                       # Carpeta generada automáticamente por Gradle al compilar
+├── gradle/                      # Configuraciones internas de Gradle
+├── target/                      # Puede contener salidas de compilación (similar a build/)
+├── .gitignore                   # Archivos/carpetas que Git debe ignorar
+├── build.gradle                 # Script principal de construcción (build) del proyecto
+├── gradlew                     # Wrapper para ejecutar Gradle sin necesidad de instalarlo
+├── gradlew.bat                  # Wrapper para entornos Windows
+├── cucumber.properties          # Propiedades de configuración para Cucumber
+│
+├── src/
+│   └── test/                    # 📌 Zona de pruebas (test) — Detalle a continuación
+│       ├── java/
+│       │   ├── pages/           # 🧩 Página de objetos - patrón Page Object Model (POM)
+│       │   │   ├── Elemento.java         # Clase auxiliar para manejo de elementos web
+│       │   │   ├── Formulario.java       # Interacciones con el formulario (llenado, validación, envío)
+│       │   │   └── PaginaBase.java       # Clase base compartida (ej. WebDriver, métodos comunes)
+│       │   │
+│       │   ├── runner/          # 🚀 Ejecutores de prueba (Cucumber + JUnit/TestNG)
+│       │   │   └── RunnerJava.java       # Clase que configura los features y step definitions
+│       │   │
+│       │   ├── steps/           # 🧪 Definiciones de pasos de Cucumber (Step Definitions)
+│       │       ├── Hooks.java             # Métodos @Before y @After (config inicial y limpieza)
+│       │       └── pasosFormulario.java   # Implementación Java de los pasos del archivo `.feature`
+│       │
+│       └── resources/          # 📄 Archivos de recursos de prueba
+│           ├── Casosformulario.feature    # Escenarios escritos en Gherkin (Given, When, Then)
+│           └── cucumber.properties         # Configuración personalizada para Cucumber (idioma, tags, etc.)
+│
+└── index.html                  # Archivo HTML que representa el formulario web a probar
