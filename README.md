@@ -5,84 +5,96 @@ Este proyecto automatiza la validación de un formulario web ubicado en http:/So
 
 A continuación, se describen los escenarios de prueba automatizados:
 
-### @Formulario1
-**Escenario:** El usuario ingresa datos válidos y envía el formulario exitosamente.  
-**Precondiciones:**
-- El usuario accede al formulario desde un navegador compatible.
-- El formulario está completamente cargado.
-
-**Datos de ejemplo:**  
-- Nombre: Diana Medina  
-- Email: dimedina44@gmail.com  
-- Barrio: La trini  
-- Asunto: prueba1  
-- Mensaje: Prueba1  
-
-**Resultado esperado:** Se muestra una alerta o mensaje de éxito indicando que el formulario fue enviado correctamente.
-
----
-
-### @Formulario2
-**Escenario:** Validación de ingreso de emails inválidos.  
-**Precondiciones:**
-- El campo de email se encuentra visible y habilitado.
-- El usuario accede correctamente al formulario.
-
-**Emails inválidos probados:**  
-- dimedina44.gmail.com  
-- dimedina44gmail.com  
-- d$r@gmail.com  
-
-**Resultado esperado:** El campo muestra un mensaje de error por formato inválido de email.
+### ✅ Caso 1: Envío exitoso del formulario con datos válidos
+- **Nombre del caso:** Envío exitoso del formulario  
+- **Objetivo:** Validar que el formulario se envíe correctamente cuando todos los campos se completan con datos válidos.  
+- **Datos de prueba:**
+  - Nombre: Diana Medina  
+  - Email: dimedina44@gmail.com  
+  - Barrio: La trini  
+  - Asunto: prueba1  
+  - Mensaje: Prueba1  
+- **Pasos:**
+  1. Navegar a la URL del formulario.
+  2. Ingresar los datos válidos en todos los campos.
+  3. Hacer clic en el botón "Enviar".
+- **Resultado esperado:** El formulario se envía correctamente y se muestra un mensaje de confirmación.
 
 ---
 
-### @Formulario3
-**Escenario:** El usuario intenta enviar el formulario sin completar ningún campo.  
-**Precondiciones:**
-- Todos los campos del formulario están vacíos.
-- El botón "Enviar" está habilitado.
-
-**Resultado esperado:** Se genera una alerta o mensaje de error indicando que no se puede enviar el formulario.
-
----
-
-### @Formulario4
-**Escenario:** 
-Se valida nombre invalido contiene menos de 4 letras o caracteres especiales.  
-**Precondiciones:**
-- El campo "Nombre" está visible y permite la escritura.
-
-**Valores inválidos:**  
-- DI  
-- Di$na  
-
-**Resultado esperado:** Se muestra un mensaje de error indicando que el nombre ingresado no es válido.
+### ❌ Caso 2: Validación de email con formato inválido
+- **Nombre del caso:** Error al ingresar email inválido  
+- **Objetivo:** Verificar que se muestre un mensaje de error cuando se ingresa un email en formato incorrecto.  
+- **Datos de prueba:**
+  - dimedina44.gmail.com  
+  - dimedina44gmail.com  
+  - d$r@gmail.com  
+- **Pasos:**
+  1. Navegar a la URL del formulario.
+  2. Ingresar uno de los emails inválidos en el campo correspondiente.
+- **Resultado esperado:** Se muestra un mensaje de error en el campo email que impide el envío del formulario.
 
 ---
 
-### @Formulario5
-**Escenario:** Los campos "Barrio" y "Asunto" contienen datos inválidos.  
-**Precondiciones:**
-- El usuario ha dejado los demás campos vacíos o con datos válidos.
-- Los campos "Barrio" y "Asunto" aceptan entrada de texto.
-
-**Datos de ejemplo inválidos:**  
-- Barrio: Lat, Asunto: Ok!  
-- Barrio: Cl#, Asunto: Ok  
-
-**Resultado esperado:** Se muestran mensajes de error específicos para cada campo inválido.
+### ⚠️ Caso 3: Envío del formulario sin completar campos
+- **Nombre del caso:** Formulario vacío  
+- **Objetivo:** Validar que no se permita enviar el formulario si ningún campo ha sido completado.  
+- **Datos de prueba:** Todos los campos vacíos.  
+- **Pasos:**
+  1. Navegar a la URL del formulario.
+  2. Hacer clic directamente en el botón "Enviar" sin completar ningún campo.
+- **Resultado esperado:** Se muestra una alerta o mensaje de error indicando no se puede enviar el formulario.
 
 ---
 
-### @Formulario6
-**Escenario:** Verificación ortográfica de los títulos "Barrio" y "Mensaje".  
-**Precondiciones:**
-- El formulario está completamente cargado.
-- Los títulos o labels son visibles en pantalla.
+### 🚫 Caso 4: Validación de nombre inválido (menos de 4 caracteres o caracteres especiales)
+- **Nombre del caso:** Nombre inválido  
+- **Objetivo:** Verificar que el sistema muestre un mensaje de error cuando se ingresa un nombre muy corto o con caracteres no permitidos.  
+- **Datos de prueba:**
+  - DI  
+  - Di$na  
+- **Pasos:**
+  1. Navegar al formulario.
+  2. Ingresar un nombre inválido en el campo correspondiente.
+- **Resultado esperado:** Se muestra un mensaje de error indicando que el nombre no es válido.
 
-**Resultado esperado:** Los títulos están escritos correctamente como "Barrio" y "Mensaje", sin errores ortográficos.
+---
 
+### 🚫 Caso 5: Validación de campos Barrio y Asunto con menos de 4 caracteres
+- **Nombre del caso:** Campos Barrio y Asunto inválidos  
+- **Objetivo:** Verificar que el formulario muestre mensajes de error cuando los campos “Barrio” y “Asunto” contienen menos de 4 caracteres válidos.  
+- **Datos de prueba:**
+  - Barrio: Lat / Asunto: Ok!  
+  - Barrio: Cl# / Asunto: Ok  
+- **Pasos:**
+  1. Navegar al formulario.
+  2. Ingresar los valores inválidos en los campos Barrio y Asunto.
+- **Resultado esperado:** Se muestra un mensaje de error específico en ambos campos.
+
+---
+
+### 🔍 Caso 6: Verificación de ortografía de los títulos "Barrio" y "Mensaje"
+- **Nombre del caso:** Validación de ortografía de títulos  
+- **Objetivo:** Confirmar que los títulos de los campos “Barrio” y “Mensaje” estén correctamente escritos, sin errores ortográficos.  
+- **Datos de prueba:** No aplica (validación visual).  
+- **Pasos:**
+  1. Navegar al formulario web.
+  2. Verificar que el título del campo “Barrio” esté correctamente escrito.
+  3. Verificar que el título del campo “Mensaje” esté correctamente escrito.
+- **Resultado esperado:** Los títulos deben aparecer como “Barrio” y “Mensaje”, correctamente escritos y sin errores ortográficos.
+
+### 🤖 Principales características que hacen óptima esta solución
+
+#### Cobertura funcional completa:
+Se validan rutas positivas (datos válidos) y negativas (errores comunes), abarcando diferentes combinaciones de entrada y comportamiento esperado.
+#### Uso de Gherkin (BDD):
+El lenguaje natural mejora la comprensión entre testers, desarrolladores y partes interesadas no técnicas, facilitando el trabajo colaborativo.
+#### Escenarios reutilizables y parametrizados:
+Gracias a Scenario Outline, es posible reutilizar un mismo flujo con múltiples datos de prueba sin duplicar código.
+#### Detección efectiva de errores de validación:
+Se prueban restricciones como longitud mínima, caracteres inválidos, campos vacíos, emails mal escritos, etc.
+#### Orientación al usuario final:
+La lógica de prueba simula el comportamiento real de un usuario interactuando con el formulario.
 
 
 ## 🧰 Herramientas y Versiones Usadas
@@ -101,7 +113,7 @@ Visita: https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.
 Descarga el instalador correspondiente a tu sistema operativo (Windows, macOS, Linux).
 Sigue los pasos de instalación.
 
-✅ Verificar instalación
+☑️ Verificar instalación
 Después de instalar, abre una terminal y ejecuta: java -version
 
 ## 📦 Manejador de Dependencias
